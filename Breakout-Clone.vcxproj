@@ -163,6 +163,7 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Paddle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -183,10 +184,12 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Paddle.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="graphics\background.jpg" />
     <Image Include="graphics\ball.png" />
+    <Image Include="graphics\paddle.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

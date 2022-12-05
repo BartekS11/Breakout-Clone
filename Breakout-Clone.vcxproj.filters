@@ -27,6 +27,9 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Paddle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll" />
@@ -55,12 +58,18 @@
     <ClInclude Include="Ball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Paddle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="graphics\background.jpg">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="graphics\ball.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="graphics\paddle.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

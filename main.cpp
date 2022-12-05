@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include "Background.h"
 #include "Ball.h"
+#include "Paddle.h"
 
 using namespace std::literals;
 
@@ -10,7 +11,8 @@ int main()
 {
 	Background the_Background(0.f, 0.f);
 	Ball the_Ball(Constants::WINDOW_WIDTH / 2.f, Constants::WINDOW_HEIGHT / 2.f);
-
+	Paddle the_Paddle(Constants::WINDOW_WIDTH / 2.f, Constants::WINDOW_HEIGHT - Constants::PADDLE_HEIGHT);
+		
 	sf::RenderWindow game_window({Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT},
 		"Breakout Game"s);
 	game_window.setFramerateLimit(60);
@@ -34,9 +36,11 @@ int main()
 		}
 		the_Background.update();
 		the_Ball.update();
+		the_Paddle.update();
 
 		the_Background.draw(game_window);
 		the_Ball.draw(game_window);
+		the_Paddle.draw(game_window);
 		game_window.display();
 	}
 }
