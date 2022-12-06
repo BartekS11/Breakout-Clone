@@ -33,8 +33,6 @@ void Paddle::process_player_input()
 	{
 		velocity.x = 0;
 	}
-
-
 }
 
 Paddle::Paddle(float x, float y) : Moving_entity()
@@ -55,4 +53,16 @@ void Paddle::update()
 void Paddle::draw(sf::RenderWindow& window)
 {
 	window.draw(sprite);
+}
+
+void Paddle::move_up() noexcept {}
+
+void Paddle::move_left() noexcept
+{
+	velocity.x = -Constants::PADDLE_SPEED;
+}
+
+void Paddle::move_right() noexcept
+{
+	velocity.x = Constants::PADDLE_SPEED;
 }

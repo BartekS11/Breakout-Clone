@@ -37,3 +37,18 @@ void Ball::draw(sf::RenderWindow& window)
 {
 	window.draw(sprite);
 }
+
+void Ball::move_up() noexcept
+{
+	velocity.y = -Constants::BALL_SPEED;
+}
+
+void Ball::move_left() noexcept
+{
+	velocity.x = -Constants::BALL_SPEED;
+}
+
+void Ball::move_right() noexcept
+{
+	velocity.x = Constants::BALL_SPEED;
+}
