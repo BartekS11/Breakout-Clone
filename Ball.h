@@ -15,3 +15,5 @@ public:
 	void move_left() noexcept override;
 	void move_right() noexcept override;
 };
+
+float randomize_ball_directory_seed();

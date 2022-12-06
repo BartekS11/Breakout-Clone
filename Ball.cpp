@@ -40,15 +40,22 @@ void Ball::draw(sf::RenderWindow& window)
 
 void Ball::move_up() noexcept
 {
-	velocity.y = -Constants::BALL_SPEED;
+	velocity.y = -Constants::BALL_SPEED + randomize_ball_directory_seed();
 }
 
 void Ball::move_left() noexcept
 {
-	velocity.x = -Constants::BALL_SPEED;
+	velocity.x = -Constants::BALL_SPEED + randomize_ball_directory_seed();
 }
 
 void Ball::move_right() noexcept
 {
-	velocity.x = Constants::BALL_SPEED;
+	velocity.x = Constants::BALL_SPEED + randomize_ball_directory_seed();
+}
+
+float randomize_ball_directory_seed()
+{
+	srand((int)time(0) * Constants::BALL_SPEED);
+	auto randSeed = rand() % 200 / 100.f;
+	return randSeed;
 }
