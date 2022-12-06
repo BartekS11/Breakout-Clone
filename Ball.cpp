@@ -61,6 +61,6 @@ void Ball::move_right() noexcept
 float randomize_ball_directory_seed()
 {
 	srand((int)time(0) * Constants::BALL_SPEED);
-	auto randSeed = rand() % 200 / 100.f;
+	auto randSeed = rand() % 50 / 100.f;
 	return randSeed;
 }

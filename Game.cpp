@@ -32,26 +32,27 @@ void Game::run()
 			{
 				game_window.close();
 			}
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P))
-		{
-			if (!pause_key_active)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P))
 			{
-				if (state == game_state::paused)
+				if (!pause_key_active)
 				{
-					state = game_state::running;
+					if (state == game_state::paused)
+					{
+						state = game_state::running;
+					}
+					else
+					{
+						state = game_state::paused;
+					}
+					pause_key_active = true;
 				}
 				else
 				{
-					state = game_state::paused;
+					pause_key_active = false;
 				}
-				pause_key_active = true;
-			}
-			else
-			{
-				pause_key_active = false;
 			}
 		}
+		
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
