@@ -33,3 +33,9 @@ void Brick::createBricksObjects(std::vector<Brick>& bricks)
 		}
 	}
 }
+
+void Brick::eraseBricksObjects(std::vector<Brick>& bricks)
+{
+	bricks.erase(std::remove_if(std::begin(bricks), std::end(bricks),
+		[](const Brick& b) { return b.is_destroyed(); }),std::end(bricks));
+}

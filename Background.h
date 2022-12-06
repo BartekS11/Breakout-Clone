@@ -5,6 +5,7 @@
 
 class Background : public Entity
 {
+private:
 	static sf::Texture texture;
 
 public:

@@ -49,6 +49,13 @@ int main()
 		}
 		handle_collision(the_Ball, the_Paddle);
 
+		for (auto& b : bricks)
+		{
+			handle_collision(the_Ball, b);
+		}
+		
+		Brick::eraseBricksObjects(bricks);
+
 		the_Background.draw(game_window);
 		the_Ball.draw(game_window);
 		the_Paddle.draw(game_window);

@@ -57,6 +57,8 @@ void Paddle::draw(sf::RenderWindow& window)
 
 void Paddle::move_up() noexcept {}
 
+void Paddle::move_down() noexcept {}
+
 void Paddle::move_left() noexcept
 {
 	velocity.x = -Constants::PADDLE_SPEED;

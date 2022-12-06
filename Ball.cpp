@@ -43,6 +43,11 @@ void Ball::move_up() noexcept
 	velocity.y = -Constants::BALL_SPEED + randomize_ball_directory_seed();
 }
 
+void Ball::move_down() noexcept
+{
+	velocity.y = Constants::BALL_SPEED + randomize_ball_directory_seed();
+}
+
 void Ball::move_left() noexcept
 {
 	velocity.x = -Constants::BALL_SPEED + randomize_ball_directory_seed();

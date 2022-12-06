@@ -13,4 +13,5 @@ public:
 	void update() override;
 	void draw(sf::RenderWindow& window) override;
 	static void createBricksObjects(std::vector<Brick>& bricks);
+	static void eraseBricksObjects(std::vector<Brick>& bricks);
 };

@@ -4,6 +4,7 @@
 
 class Ball : public Moving_entity
 {
+private:
 	static sf::Texture texture;
 
 public:
@@ -14,6 +15,7 @@ public:
 	void move_up() noexcept override;
 	void move_left() noexcept override;
 	void move_right() noexcept override;
+	void move_down() noexcept override;
 };
 
 float randomize_ball_directory_seed();
