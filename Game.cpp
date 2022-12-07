@@ -43,10 +43,12 @@ void Entity_Manager::draw(sf::RenderWindow& window)
 Game::Game()
 {
 	game_window.setFramerateLimit(60);
+	font.loadFromFile("fonts/KOMIKAP_.ttf");
 }
 
 void Game::reset()
 {
+	lives = Constants::PLAYER_LIVES;
 	state = game_state::paused;
 	manager.clear();
 	manager.create<Background>(0.f, 0.f);
@@ -59,7 +61,10 @@ void Game::reset()
 void Game::run()
 {
 	bool pause_key_active{ false };
-
+	TextHandler text_state(font, Constants::WINDOW_WIDTH / 2.f - 125.f, Constants::WINDOW_HEIGHT / 2.f - 100.f,
+		sf::Color::White, 35, "Paused");
+	TextHandler lives_state(font, Constants::WINDOW_WIDTH / 2.f - 90.f, Constants::WINDOW_HEIGHT / 2.f - 50.f,
+		sf::Color::White, 35, "Lives: " + std::to_string(lives));
 	while (game_window.isOpen())
 	{
 		game_window.clear(sf::Color::Black);
@@ -101,23 +106,62 @@ void Game::run()
 		{
 			reset();
 		}
-		if (state != game_state::paused)
+		if (state == game_state::paused)
 		{
+			manager.draw(game_window);
+		}
+
+		if (state != game_state::running)
+		{
+			switch (state)
+			{
+			case game_state::paused:
+				text_state.updateString("	Paused	 ");
+				break;
+			case game_state::game_over:
+				text_state.updateString("  Game Over!  ");
+				break;
+			case game_state::player_wins:
+				text_state.updateString("Player Wins!");
+				break;
+			default:
+				break;
+			}
+			game_window.draw(text_state.getsfText());
+			game_window.draw(lives_state.getsfText());
+		}
+		else
+		{
+			if (manager.get_all<Ball>().empty())
+			{
+				manager.create<Ball>(Constants::WINDOW_WIDTH / 2.f, Constants::WINDOW_HEIGHT / 2.f);
+				--lives;
+
+				state = game_state::paused;
+			}
+			if (manager.get_all<Brick>().empty())
+			{
+				state = game_state::player_wins;
+			}
+			if (lives <= 0)
+			{
+				state = game_state::game_over;
+			}
+			lives_state.updateString("Lives: " + std::to_string(lives));
 			manager.update();
 			manager.apply_all<Ball>([this](auto& the_Ball) {
 				manager.apply_all<Brick>([&the_Ball](auto& the_Brick) {
 					handle_collision(the_Ball, the_Brick);
 					});
 				});
-
 			manager.apply_all<Ball>([this](auto& the_Ball) {
 				manager.apply_all<Paddle>([&the_Ball](auto& the_Paddle) {
 					handle_collision(the_Ball, the_Paddle);
 					});
 				});
 			manager.refresh();
+			manager.draw(game_window);
 		}
-		manager.draw(game_window);
 		game_window.display();
 	}
 }

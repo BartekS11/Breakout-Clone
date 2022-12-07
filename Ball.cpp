@@ -13,6 +13,7 @@ Ball::Ball(float x, float y) : Moving_entity()
 void Ball::update()
 {
 	sprite.move(velocity);
+
 	if (getSprite().x < 0)
 	{
 		velocity.x = -velocity.x;
@@ -28,7 +29,7 @@ void Ball::update()
 	}
 	if (getSprite().y > Constants::WINDOW_HEIGHT)
 	{
-		velocity.y = -velocity.y;
+		destroy();
 	}
 
 }

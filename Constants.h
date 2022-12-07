@@ -15,4 +15,6 @@ public:
 	static constexpr int BRICK_STRENGTH{ 3 };
 	static constexpr int BRICK_COLUMNS{ 10 };
 	static constexpr int BRICK_ROWS{ 4 };
+	static constexpr int PLAYER_LIVES{ 3 };
+
 };

@@ -10,6 +10,7 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include "Brick.h"
+#include "TextHandler.h"
 
 using entity_vector = std::vector<std::shared_ptr<Entity>>;
 using entity_alias_vector = std::vector<Entity*>;
@@ -67,8 +68,10 @@ class Game
 private:
 	sf::RenderWindow game_window{ { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT },
 		"Breakout-Clone Game" };
-	enum class game_state {paused, running};
+	enum class game_state {paused, running, game_over, player_wins};
 	Entity_Manager manager;
+	sf::Font font;
+	int lives{ Constants::PLAYER_LIVES };
 	game_state state{ game_state::running };
 	
 public:
