@@ -2,7 +2,7 @@
 
 sf::Texture Ball::texture;
 
-Ball::Ball(float x, float y)
+Ball::Ball(float x, float y) : Moving_entity()
 {
 	texture.loadFromFile("graphics/ball.png");
 	sprite.setTexture(texture);
@@ -60,7 +60,7 @@ void Ball::move_right() noexcept
 
 float randomize_ball_directory_seed()
 {
-	srand((int)time(0) * Constants::BALL_SPEED);
+	srand((int)time(0) * static_cast<int>(Constants::BALL_SPEED));
 	auto randSeed = rand() % 50 / 100.f;
 	return randSeed;
 }

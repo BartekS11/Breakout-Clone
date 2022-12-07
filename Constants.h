@@ -12,6 +12,7 @@ public:
 	static constexpr float BRICK_WIDTH{ 43.f };
 	static constexpr float BRICK_HEIGHT{ 20.f };
 	static constexpr float BRICK_OFFSET{ BRICK_WIDTH / 2.f };
+	static constexpr int BRICK_STRENGTH{ 3 };
 	static constexpr int BRICK_COLUMNS{ 10 };
 	static constexpr int BRICK_ROWS{ 4 };
 };

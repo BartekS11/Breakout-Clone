@@ -1,15 +1,59 @@
+#include <algorithm>
+
 #include "Game.h"
 #include "Interactions.h"
 
+
+void Entity_Manager::refresh() {
+
+	for (auto& [type, alias_vector] : grouped_entities) 
+	{
+		alias_vector.erase(remove_if(begin(alias_vector), end(alias_vector),
+			[](const auto& p) { return p->is_destroyed(); }
+		),
+			end(alias_vector));
+	}
+	all_entities.erase(remove_if(begin(all_entities), end(all_entities),
+		[](const auto& p) { return p->is_destroyed(); }
+	),
+		end(all_entities));
+}
+void Entity_Manager::clear()
+{
+	grouped_entities.clear();
+	all_entities.clear();
+}
+
+void Entity_Manager::update()
+{
+	for (auto& e : all_entities)
+	{
+		e->update();
+	}
+}
+
+void Entity_Manager::draw(sf::RenderWindow& window)
+{
+	for (auto& e : all_entities)
+	{
+		e->draw(window);
+	}
+}
+
 Game::Game()
 {
-	Brick::createBricksObjects(bricks);
 	game_window.setFramerateLimit(60);
 }
 
 void Game::reset()
 {
-	Brick::createBricksObjects(bricks);
+	state = game_state::paused;
+	manager.clear();
+	manager.create<Background>(0.f, 0.f);
+	manager.create<Ball>(Constants::WINDOW_WIDTH / 2.f, Constants::WINDOW_HEIGHT / 2.f);
+	manager.create<Paddle>(Constants::WINDOW_WIDTH / 2.f, Constants::WINDOW_HEIGHT - Constants::PADDLE_HEIGHT);
+
+	createBricksObjects();
 }
 
 void Game::run()
@@ -52,7 +96,6 @@ void Game::run()
 				}
 			}
 		}
-		
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
@@ -60,30 +103,35 @@ void Game::run()
 		}
 		if (state != game_state::paused)
 		{
-			the_Background.update();
-			the_Ball.update();
-			the_Paddle.update();
-			for (auto& b : bricks)
-			{
-				b.update();
-			}
-			handle_collision(the_Ball, the_Paddle);
+			manager.update();
+			manager.apply_all<Ball>([this](auto& the_Ball) {
+				manager.apply_all<Brick>([&the_Ball](auto& the_Brick) {
+					handle_collision(the_Ball, the_Brick);
+					});
+				});
 
-			for (auto& b : bricks)
-			{
-				handle_collision(the_Ball, b);
-			}
-
-			Brick::eraseBricksObjects(bricks);
-
+			manager.apply_all<Ball>([this](auto& the_Ball) {
+				manager.apply_all<Paddle>([&the_Ball](auto& the_Paddle) {
+					handle_collision(the_Ball, the_Paddle);
+					});
+				});
+			manager.refresh();
 		}
-		the_Background.draw(game_window);
-		the_Ball.draw(game_window);
-		the_Paddle.draw(game_window);
-		for (auto b : bricks)
-		{
-			b.draw(game_window);
-		}
+		manager.draw(game_window);
 		game_window.display();
+	}
+}
+
+void Game::createBricksObjects()
+{
+	for (auto i = 0; i < Constants::BRICK_COLUMNS; ++i)
+	{
+		for (auto j = 0; j < Constants::BRICK_ROWS; ++j)
+		{
+			float x = Constants::BRICK_OFFSET + (i + 1) * Constants::BRICK_WIDTH;
+			float y = (j + 1) * Constants::BRICK_HEIGHT;
+
+			manager.create<Brick>(x, y);
+		}
 	}
 }
